@@ -145,14 +145,5 @@ Only significant rows are retained by the genome-wide PLACO/CPASSOC scripts:
 `P < 5e-8` or `BH-FDR < 0.05`. Full non-significant genome-wide outputs are not
 kept.
 
-## Publication safety audit
 
-Before pushing to GitHub, run:
-
-```bash
-python tools/audit_github_code_export.py .
-```
-
-The audit blocks common data files, archives, logs, secrets, and unexpectedly
-large files.
 
