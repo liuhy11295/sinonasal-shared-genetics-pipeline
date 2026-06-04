@@ -63,9 +63,6 @@ MTAG / PLACO / CPASSOC positive SNP evidence
 09_lcv_mr_secondary/                  Secondary LCV/MR scripts
 config/                               Example path configuration
 docs/                                 Reproducibility and project notes
-scripts/                              Repository audit utilities
-src/                                  Legacy/publication export helper scripts retained from the previous layout
-tests/                                Lightweight audit tests
 ```
 
 ## Environment
@@ -110,7 +107,6 @@ environment and point the configuration or wrappers to their locations.
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python -m pytest
 ```
 
 ## Configuration
