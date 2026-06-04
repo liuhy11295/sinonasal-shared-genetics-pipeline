@@ -62,7 +62,6 @@ MTAG / PLACO / CPASSOC positive SNP evidence
 08_twas/                              TWAS, including GTEx v8 49-tissue candidate branch
 09_lcv_mr_secondary/                  Secondary LCV/MR scripts
 config/                               Example path configuration
-docs/                                 Reproducibility and project notes
 ```
 
 ## Environment

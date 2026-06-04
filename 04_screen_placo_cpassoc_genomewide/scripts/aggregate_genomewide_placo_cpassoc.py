@@ -273,7 +273,7 @@ def main() -> None:
         f"- Genome-wide CPASSOC SNPs: {cpassoc_sig['SNP'].nunique() if 'SNP' in cpassoc_sig.columns else 0}\n"
         f"- Genome-wide PLACO pairs: {placo_sig['pair_id'].nunique() if 'pair_id' in placo_sig.columns else 0}\n"
         f"- Genome-wide CPASSOC pairs: {cpassoc_sig['pair_id'].nunique() if 'pair_id' in cpassoc_sig.columns else 0}\n\n"
-        "## Temporary full results\n\n"
+        "## Full-result retention\n\n"
         "- Full genome-wide PLACO/CPASSOC result rows were not saved.\n"
         "- Scratch directories are deleted by the per-pair SLURM script after extracting significant rows.\n\n"
         "## Evidence tier status\n\n"
