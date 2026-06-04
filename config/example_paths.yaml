@@ -1,0 +1,24 @@
+# Example configuration. Replace with private local/server paths outside git.
+project_root: /path/to/project
+
+inputs:
+  pair_manifest: results/phase0_extension/step2_input_tables/pair_manifest.tsv
+  evidence_pair_manifest: results/step8_mtag/evidence_pair_manifest.tsv
+  candidate_snps: results/phase0_extension/step2_input_tables/candidate_snps.tsv
+
+references:
+  ld_plink_prefix: /path/to/1000G.EUR.QC
+  ldscore_prefix: /path/to/LDscore.
+  magma_binary: /path/to/magma
+  magma_gene_loc: /path/to/NCBI37.3.gene.loc
+  go_bp_gmt: /path/to/GO_Biological_Process.gmt
+  kegg_gmt: /path/to/KEGG.gmt
+  reactome_gmt: /path/to/Reactome.gmt
+
+tools:
+  ldsc: /path/to/ldsc.py
+  munge_sumstats: /path/to/munge_sumstats.py
+  mtag: /path/to/mtag.py
+  placo_source: /path/to/PLACO_v0.2.0.R
+  cpassoc_zip: /path/to/CPASSOC.zip
+

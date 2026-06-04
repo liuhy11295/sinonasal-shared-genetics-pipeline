@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Data and generated outputs
+data/
+results/
+outputs/
+reference/
+resources/
+*.gz
+*.zip
+*.tar
+*.tgz
+*.tar.gz
+*.bz2
+*.xz
+*.parquet
+*.rds
+*.RDS
+*.bed
+*.bim
+*.fam
+*.bgen
+*.vcf
+*.vcf.gz
+*.h5
+*.h5ad
+
+# Scheduler/runtime files
+*.slurm
+*.out
+*.err
+*.log
+slurm-*.out
+
+# Credentials and local machine config
+*key*
+*secret*
+*token*
+*.pem
+*.ppk
+*.env
+!.env.example
+
+# OS/editor
+Thumbs.db
+.DS_Store
+*.swp
+
