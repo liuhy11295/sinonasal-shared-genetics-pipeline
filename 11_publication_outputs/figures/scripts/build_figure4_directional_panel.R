@@ -3,7 +3,7 @@ PROJECT_ROOT <- if (dir.exists(file.path(getwd(), "figure_final"))) {
 } else {
   normalizePath(file.path(getwd(), ".."), mustWork = TRUE)
 }
-source(file.path(PROJECT_ROOT, "figure_final", "scripts", "common_revised.R"))
+source(file.path(PROJECT_ROOT, "figure_final", "scripts", "common.R"))
 
 label_norm <- function(x) {
   x <- gsub(" to J10 ", " to ", x)

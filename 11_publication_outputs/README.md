@@ -1,9 +1,11 @@
 # Publication outputs
 
-The `figures/scripts` directory archives the R scripts used to assemble the
-main and supplementary figures. Set `PAPER_ROOT` and `RESULTS_ROOT` before
-rendering; the scripts expect the manuscript project's derived figure source
-data and the analysis result tree.
+The `figures/scripts` directory archives the current final R scripts used to
+assemble the main and supplementary figures. Stable entry points are
+`render_figure1.R` through `render_figure4.R`,
+`render_supplementary_figures.R`, and `render_all.R`. Set `PAPER_ROOT` and
+`RESULTS_ROOT` before rendering; the scripts expect the manuscript project's
+derived figure source data and the analysis result tree.
 
 The `tables/scripts` directory archives the five-table builder and QA scripts.
 The `tables/source_data` directory contains the nine final TSV sheets:

@@ -32,6 +32,28 @@ class RepositorySafetyTests(unittest.TestCase):
         key_names = {"id_rsa", "id_ed25519", "id_ecdsa"}
         self.assertFalse(any(Path(path).name in key_names for path in tracked))
 
+    def test_publication_figure_scripts_use_stable_names(self):
+        root = Path(__file__).resolve().parents[1]
+        script_dir = root / "11_publication_outputs" / "figures" / "scripts"
+        expected = {
+            "build_figure4_directional_panel.R",
+            "build_main_figure_components.R",
+            "common.R",
+            "explore_figure1_layouts.R",
+            "qa_all_figures.R",
+            "qa_figure1.R",
+            "render_all.R",
+            "render_figure1.R",
+            "render_figure2.R",
+            "render_figure3.R",
+            "render_figure4.R",
+            "render_supplementary_figures.R",
+        }
+        self.assertEqual(
+            {path.name for path in script_dir.glob("*.R")},
+            expected,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

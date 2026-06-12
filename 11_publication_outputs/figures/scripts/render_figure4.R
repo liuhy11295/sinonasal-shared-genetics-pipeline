@@ -5,9 +5,9 @@ PROJECT_ROOT <- if (dir.exists(file.path(getwd(), "figure_final"))) {
 }
 
 source(file.path(PROJECT_ROOT, "figure_final", "scripts",
-                 "render_main_figures_revised.R"))
+                 "build_main_figure_components.R"))
 source(file.path(PROJECT_ROOT, "figure_final", "scripts",
-                 "render_figure4c_directional_preview.R"))
+                 "build_figure4_directional_panel.R"))
 
 p4a_arc <- p4_candidate_arc_network +
   labs(

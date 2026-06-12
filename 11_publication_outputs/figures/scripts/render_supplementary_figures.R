@@ -3,7 +3,7 @@ PROJECT_ROOT <- if (dir.exists(file.path(getwd(), "figure_final"))) {
 } else {
   normalizePath(file.path(getwd(), ".."), mustWork = TRUE)
 }
-source(file.path(PROJECT_ROOT, "figure_final", "scripts", "common_revised.R"))
+source(file.path(PROJECT_ROOT, "figure_final", "scripts", "common.R"))
 
 tab <- function(n) file.path(RESULT, "Table", n)
 save_supp <- function(panels, id, design = NULL, h = 150) {
