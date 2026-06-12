@@ -12,7 +12,7 @@ summary statistics, LD reference panels, credentials, logs, or private paths.
 
 The numbered folders follow the intended final analysis order:
 
-1. `00_environment_setup/`: environment setup, tool repair, and symlink manifest scripts.
+1. `00_environment_setup/`: environment setup, method installation, and input manifest scripts.
 2. `01_ldsc_screen/`: LDSC genetic-correlation runner and BH-FDR screening.
 3. `02_lava_screen/`: LAVA local-rg runner and aggregation across all pairs; this is parallel to LDSC, not downstream of LDSC.
 4. `03_mtag_after_ldsc_lava/`: pair/input table construction and MTAG selection for pairs positive in LDSC or LAVA.
@@ -125,6 +125,14 @@ The main runtime variables are documented in `.env.example`. Scripts fail
 early when required roots are missing instead of falling back to author-local
 paths.
 
+## Script organization
+
+Each numbered workflow directory contains only its final reproducible scripts.
+Names follow a small stable vocabulary: `prepare_*`, `run_*`,
+`aggregate_results`, and `finalize_outputs`. Historical benchmarks, repair
+utilities, previews, and superseded branches are intentionally excluded; Git
+history remains the archive.
+
 ## Publication Outputs
 
 `11_publication_outputs/tables/source_data/` contains nine machine-readable
@@ -145,7 +153,7 @@ than definitive causal proof.
 ```bash
 python -m unittest discover -s tests -v
 python -m compileall -q .
-bash -n 00_environment_setup/scripts/*.sh 07_magma_gene_pathway/scripts/*.sh
+find . -type f \( -name '*.sh' -o -name '*.slurm' \) -exec bash -n {} \;
 ```
 
 ## Excluded Data

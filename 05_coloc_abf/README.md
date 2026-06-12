@@ -1,4 +1,4 @@
-# 03 Coloc ABF
+# 05 Coloc ABF
 
 This step fills the explicit coloc stage between PLACO/CPASSOC SNP/locus screening and coloc-SuSiE fine-mapping.
 
@@ -15,8 +15,8 @@ This step fills the explicit coloc stage between PLACO/CPASSOC SNP/locus screeni
 
 ## Scripts
 
-- `scripts/run_coloc_abf_locus.R`: maps screened candidate SNPs/loci to regional GWAS files, harmonizes alleles, and runs `coloc::coloc.abf`.
-- `scripts/aggregate_coloc_abf.py`: aggregates per-locus coloc output and writes coloc-positive handoff tables.
+- `scripts/run_locus.R`: maps screened candidate SNPs/loci to regional GWAS files, harmonizes alleles, and runs `coloc::coloc.abf`.
+- `scripts/aggregate_results.py`: aggregates per-locus coloc output and writes coloc-positive handoff tables.
 
 ## Outputs
 
@@ -27,7 +27,7 @@ This step fills the explicit coloc stage between PLACO/CPASSOC SNP/locus screeni
 - `results/phase0_extension/step3_coloc_abf/coloc_positive_loci.tsv`
 - `results/phase0_extension/step3_coloc_abf/candidate_snps_with_coloc_abf.tsv`
 
-For compatibility with the retained coloc-SuSiE code, `aggregate_coloc_abf.py` also syncs:
+For compatibility with coloc-SuSiE, `aggregate_results.py` also syncs:
 
 - `results/phase0_extension/step2_input_tables/coloc_positive_loci.tsv`
 - `results/phase0_extension/step2_input_tables/candidate_snps.tsv`

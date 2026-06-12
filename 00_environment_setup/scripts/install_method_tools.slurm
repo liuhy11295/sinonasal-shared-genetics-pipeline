@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J nasal_step0b_tools
-#SBATCH -o %j.step0b_tools.out
-#SBATCH -e %j.step0b_tools.err
+#SBATCH -J nasal_method_tools
+#SBATCH -o %j.install_method_tools.out
+#SBATCH -e %j.install_method_tools.err
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -17,7 +17,7 @@ TOOLS=$WORK/tools
 CHECK=$WORK/checks
 LOG=$WORK/logs
 mkdir -p "$ENV_ROOT" "$TOOLS" "$CHECK" "$LOG"
-exec > >(tee -a "$LOG/step0b_install_special_tools.runtime.log") 2>&1
+exec > >(tee -a "$LOG/install_method_tools.runtime.log") 2>&1
 
 echo "STEP0B_START=$(date -Is)"
 echo "HOST=$(hostname)"

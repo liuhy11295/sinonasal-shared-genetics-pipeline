@@ -9,6 +9,7 @@ genome-wide support flags, and writes inventory/readme/update log files.
 from __future__ import annotations
 
 import csv
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List
@@ -16,7 +17,10 @@ from typing import Dict, Iterable, List
 import pandas as pd
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+PROJECT_ROOT = Path(project_root)
 RESULTS = PROJECT_ROOT / "results"
 PLACO = RESULTS / "placo_genomewide"
 CPASSOC = RESULTS / "cpassoc_genomewide"

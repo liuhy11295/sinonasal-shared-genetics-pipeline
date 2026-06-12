@@ -1,8 +1,11 @@
 # Secondary directional evidence
 
-The top-level scripts implement the project workflow integration. The
-`final31_scripts` directory contains the final 31-pair LCV and bidirectional MR
-preparation, execution, repair, validation, and aggregation scripts.
+The `scripts` directory contains only the final 31-pair workflow:
+
+- `prepare_inputs.py`
+- `run_lcv.R`
+- `run_mr.R`
+- `finalize_outputs.py`
 
 Set `BASE`, `OUT`, `ARCHIVE`, `PLINK_BIN`, and reference paths explicitly for a
 new environment. These results are secondary directional evidence and are not

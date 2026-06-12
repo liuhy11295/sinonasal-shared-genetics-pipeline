@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J nasal_step0_env
-#SBATCH -o %j.step0_env.out
-#SBATCH -e %j.step0_env.err
+#SBATCH -J nasal_setup_env
+#SBATCH -o %j.setup_environment.out
+#SBATCH -e %j.setup_environment.err
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -19,7 +19,7 @@ CHECK_DIR=$WORK/checks
 LOG_DIR=$WORK/logs
 mkdir -p "$CHECK_DIR" "$LOG_DIR" "$ENV_ROOT"
 
-exec > >(tee -a "$LOG_DIR/step0_env_prepare.runtime.log") 2>&1
+exec > >(tee -a "$LOG_DIR/setup_environment.runtime.log") 2>&1
 
 echo "STEP0_START=$(date -Is)"
 echo "HOST=$(hostname)"

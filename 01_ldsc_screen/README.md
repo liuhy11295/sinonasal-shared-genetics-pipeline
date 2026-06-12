@@ -5,7 +5,7 @@ Benjamini-Hochberg false-discovery-rate correction across tested disease pairs.
 
 ## Script
 
-- `scripts/run_ldsc_rg.py`
+- `scripts/run_ldsc.py`
 
 ## Inputs
 

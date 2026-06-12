@@ -10,8 +10,8 @@ A pair enters MTAG if:
 
 ## Scripts
 
-- `scripts/select_and_run_mtag_pairs.py`: writes selected pairs and MTAG commands; use `--run` to execute MTAG.
-- `scripts/build_step2_input_tables.py`: retained input-table construction script from the previous bundle.
+- `scripts/prepare_inputs.py`: constructs the pair and candidate input tables.
+- `scripts/run_mtag.py`: writes selected pairs and MTAG commands; use `--run` to execute MTAG.
 
 ## MTAG SNP Threshold
 

@@ -4,9 +4,8 @@ LAVA is a parallel screen to LDSC, not a downstream filter after LDSC.
 
 ## Scripts
 
-- `scripts/run_lava_local_rg.R`: runs a project-specific LAVA local-rg command for every pair in `step2_input_tables/pair_manifest.tsv`. Set `LAVA_LOCAL_RG_SCRIPT` to the actual local-rg runner.
-- `scripts/aggregate_lava_local_rg.py`: aggregates per-pair LAVA output and retains positive local correlations with LAVA-adjusted `p_adj <= 0.05`.
-- `scripts/select_lava_all_pairs.py`: applies the same adjusted-P rule to an existing all-pair LAVA result table.
+- `scripts/run_lava.R`: runs a project-specific LAVA local-rg command for every pair in `step2_input_tables/pair_manifest.tsv`. Set `LAVA_LOCAL_RG_SCRIPT` to the actual local-rg runner.
+- `scripts/aggregate_results.py`: aggregates per-pair output, or accepts an existing all-pair table through `--lava-results`, and retains positive local correlations with adjusted `p_adj <= 0.05`.
 
 ## Handoff
 

@@ -66,7 +66,7 @@ while IFS=$'\t' read -r pair_id tissue pos_path n_rows; do
       continue
     fi
     echo -e "${pair_id}\t${tissue}\t${chr}\t${chr_n}\trun\t${out}" >> "${JOB_AUDIT}"
-    "${ROOT}/scripts/run_fusion_with_monitor.sh" "${pair_id}" "${tissue}" "${chr}" "${sumstats}" "${pos_path}" "${weights_dir}" "${LDREF_PREFIX}" "${out}"
+    "$(dirname "$0")/run_twas_job.sh" "${pair_id}" "${tissue}" "${chr}" "${sumstats}" "${pos_path}" "${weights_dir}" "${LDREF_PREFIX}" "${out}"
     last_warn="$(awk -F'\t' -v p="${pair_id}" -v t="${tissue}" -v c="${chr}" 'NR>1 && $1==p && $2==t && $3==c {print $4}' "${MEMWARN}" | tail -1)"
     if [ -n "${last_warn}" ]; then
       echo "Memory warning for ${pair_id} ${tissue} chr${chr}: ${last_warn} KB. Stopping batch." >&2

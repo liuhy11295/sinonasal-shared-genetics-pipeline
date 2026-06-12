@@ -32,27 +32,73 @@ class RepositorySafetyTests(unittest.TestCase):
         key_names = {"id_rsa", "id_ed25519", "id_ecdsa"}
         self.assertFalse(any(Path(path).name in key_names for path in tracked))
 
-    def test_publication_figure_scripts_use_stable_names(self):
+    def test_workflow_script_inventories_are_minimal_and_stable(self):
         root = Path(__file__).resolve().parents[1]
-        script_dir = root / "11_publication_outputs" / "figures" / "scripts"
         expected = {
-            "build_figure4_directional_panel.R",
-            "build_main_figure_components.R",
-            "common.R",
-            "explore_figure1_layouts.R",
-            "qa_all_figures.R",
-            "qa_figure1.R",
-            "render_all.R",
-            "render_figure1.R",
-            "render_figure2.R",
-            "render_figure3.R",
-            "render_figure4.R",
-            "render_supplementary_figures.R",
+            "00_environment_setup/scripts": {
+                "setup_environment.slurm",
+                "install_method_tools.slurm",
+                "create_input_manifest.sh",
+            },
+            "01_ldsc_screen/scripts": {"run_ldsc.py"},
+            "02_lava_screen/scripts": {"run_lava.R", "aggregate_results.py"},
+            "03_mtag_after_ldsc_lava/scripts": {
+                "prepare_inputs.py",
+                "run_mtag.py",
+            },
+            "04_screen_placo_cpassoc_genomewide/scripts": {
+                "run_pair.R",
+                "aggregate_results.py",
+            },
+            "05_coloc_abf/scripts": {"run_locus.R", "aggregate_results.py"},
+            "06_coloc_susie/scripts": {"run_locus.R", "aggregate_results.py"},
+            "07_magma_gene_pathway/scripts": {
+                "prepare_resources.sh",
+                "merge_ld_reference.sh",
+                "run_pair.py",
+                "aggregate_results.py",
+            },
+            "08_twas/scripts": {
+                "select_candidate_genes.py",
+                "prepare_sumstats.py",
+                "download_weights.sh",
+                "prepare_weights.py",
+                "run_twas.sh",
+                "run_twas_job.sh",
+                "aggregate_results.py",
+            },
+            "09_lcv_mr_secondary/scripts": {
+                "prepare_inputs.py",
+                "run_lcv.R",
+                "run_mr.R",
+                "finalize_outputs.py",
+            },
+            "10_downstream_annotation/scripts": {
+                "run_pathway_ora.R",
+                "run_cell_marker_ora.py",
+                "annotate_fuma_concordance.py",
+                "annotate_drug_targets.py",
+            },
+            "11_publication_outputs/figures/scripts": {
+                "common.R",
+                "render_all.R",
+                "render_figure1.R",
+                "render_figure2.R",
+                "render_figure3.R",
+                "render_figure4.R",
+                "render_supplementary_figures.R",
+            },
+            "11_publication_outputs/tables/scripts": {"build_final_tables.py"},
         }
-        self.assertEqual(
-            {path.name for path in script_dir.glob("*.R")},
-            expected,
-        )
+        for relative, filenames in expected.items():
+            with self.subTest(directory=relative):
+                directory = root / relative
+                observed = {
+                    path.name
+                    for path in directory.iterdir()
+                    if path.is_file()
+                }
+                self.assertEqual(observed, filenames)
 
 
 if __name__ == "__main__":

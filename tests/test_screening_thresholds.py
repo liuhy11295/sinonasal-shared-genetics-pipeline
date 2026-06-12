@@ -15,14 +15,14 @@ def load_module(path):
 
 class ScreeningThresholdTests(unittest.TestCase):
     def test_bh_adjust_preserves_order_and_monotonicity(self):
-        module = load_module(ROOT / "01_ldsc_screen/scripts/run_ldsc_rg.py")
+        module = load_module(ROOT / "01_ldsc_screen/scripts/run_ldsc.py")
         adjusted = module.bh_adjust([0.01, 0.04, 0.03, 0.20])
         expected = [0.04, 0.05333333333333334, 0.05333333333333334, 0.2]
         for observed, target in zip(adjusted, expected):
             self.assertAlmostEqual(observed, target)
 
     def test_bh_adjust_caps_at_one(self):
-        module = load_module(ROOT / "01_ldsc_screen/scripts/run_ldsc_rg.py")
+        module = load_module(ROOT / "01_ldsc_screen/scripts/run_ldsc.py")
         self.assertEqual(module.bh_adjust([0.8, 0.9]), [0.9, 0.9])
 
 

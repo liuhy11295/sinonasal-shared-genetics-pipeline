@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import math
 import os
@@ -35,14 +36,23 @@ def fnum(value: str | None) -> float | None:
 
 
 def main() -> None:
-    project_root = os.environ.get("PROJECT_ROOT", "")
-    if not project_root:
-        raise SystemExit("Set PROJECT_ROOT")
-    root = Path(project_root).expanduser().resolve()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--project-root", default=os.environ.get("PROJECT_ROOT", ""))
+    parser.add_argument(
+        "--lava-results",
+        help="Optional existing all-pair LAVA TSV; otherwise aggregate per_pair outputs.",
+    )
+    args = parser.parse_args()
+    if not args.project_root:
+        raise SystemExit("Set --project-root or PROJECT_ROOT")
+    root = Path(args.project_root).expanduser().resolve()
     out = root / "results/phase0_extension/step2_lava_screen"
     rows: list[dict[str, str]] = []
-    for path in sorted((out / "per_pair").glob("*.lava_local_rg.tsv")):
-        rows.extend(read_tsv(path))
+    if args.lava_results:
+        rows = read_tsv(Path(args.lava_results))
+    else:
+        for path in sorted((out / "per_pair").glob("*.lava_local_rg.tsv")):
+            rows.extend(read_tsv(path))
     tested = [r for r in rows if fnum(r.get("p_adj")) is not None]
     if rows and not tested:
         raise SystemExit("LAVA output must contain numeric p_adj values")

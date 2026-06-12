@@ -7,7 +7,7 @@ assemble the main and supplementary figures. Stable entry points are
 `RESULTS_ROOT` before rendering; the scripts expect the manuscript project's
 derived figure source data and the analysis result tree.
 
-The `tables/scripts` directory archives the five-table builder and QA scripts.
+The `tables/scripts` directory contains the final five-table builder.
 The `tables/source_data` directory contains the nine final TSV sheets:
 
 | Supplementary table | Source-data sheets |
