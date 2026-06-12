@@ -7,7 +7,10 @@ import pandas as pd
 from scipy.stats import norm, combine_pvalues, hypergeom
 from statsmodels.stats.multitest import multipletests
 
-ROOT = Path(os.environ.get('PROJECT_ROOT','/platform_data/p_user/p010/phase0'))
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+ROOT = Path(project_root)
 STEP8 = ROOT/'results/phase0_extension/step8_magma_gene_pathway'
 RES = STEP8/'resources'
 OUT = STEP8

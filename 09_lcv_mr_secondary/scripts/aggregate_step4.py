@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 import csv
+import os
 from collections import Counter, defaultdict
 from pathlib import Path
 
-PROJECT_ROOT = Path("/platform_data/p_user/p010/phase0")
+project_root = os.environ.get("PROJECT_ROOT", "")
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT")
+PROJECT_ROOT = Path(project_root).expanduser().resolve()
 STEP2 = PROJECT_ROOT / "results/phase0_extension/step2_input_tables"
 STEP3 = PROJECT_ROOT / "results/phase0_extension/step3_susie_coloc"
 STEP4 = PROJECT_ROOT / "results/phase0_extension/step4_lcv_mr"

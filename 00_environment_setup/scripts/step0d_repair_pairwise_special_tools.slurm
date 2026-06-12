@@ -1,8 +1,7 @@
 #!/bin/bash
 #SBATCH -J nasal_step0d_repair
-#SBATCH -o /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0d_repair.out
-#SBATCH -e /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0d_repair.err
-#SBATCH -D /platform_data/p_user/p010/phase0
+#SBATCH -o %j.step0d_repair.out
+#SBATCH -e %j.step0d_repair.err
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -10,11 +9,10 @@
 #SBATCH -t 0-08:00:00
 
 set -euo pipefail
-BASE=/platform_data/p_user/p010
-PROJECT=$BASE/phase0
+PROJECT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 WORK=$PROJECT/results/phase0_extension/step0_1
-CONDA_ROOT=$BASE/miniconda3
-ENV=$BASE/conda_envs/nasal_pairwise_env
+CONDA_ROOT="${CONDA_ROOT:?Set CONDA_ROOT}"
+ENV="${PHASE0_CONDA_ENV:?Set PHASE0_CONDA_ENV}"
 TOOLS=$WORK/tools
 CHECK=$WORK/checks
 LOG=$WORK/logs

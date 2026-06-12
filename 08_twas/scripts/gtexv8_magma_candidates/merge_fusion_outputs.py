@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 import csv
+import os
 from pathlib import Path
 
 import pandas as pd
 from statsmodels.stats.multitest import multipletests
 
 
-ROOT = Path("/home/lhy/nasal/results_end/twas_fusion_gtexv8_magma_candidates")
+results_root = os.environ.get("RESULTS_ROOT", "").strip()
+if not results_root:
+    raise SystemExit("Set RESULTS_ROOT to the analysis results directory.")
+ROOT = Path(results_root) / "twas_fusion_gtexv8_magma_candidates"
 RAW = ROOT / "results/raw"
 TISSUE_OUT = ROOT / "results/tissue_level"
 GENE_OUT = ROOT / "results/gene_level"

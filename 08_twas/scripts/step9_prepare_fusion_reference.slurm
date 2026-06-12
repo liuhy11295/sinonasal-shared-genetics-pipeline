@@ -2,7 +2,6 @@
 #SBATCH -J step9_twas_ref
 #SBATCH -o %j.step9_twas_ref.out
 #SBATCH -e %j.step9_twas_ref.err
-#SBATCH -D /platform_data/p_user/p010/phase0
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -11,7 +10,7 @@
 
 set -euo pipefail
 
-PROJECT_ROOT=/platform_data/p_user/p010/phase0
+PROJECT_ROOT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 cd "$PROJECT_ROOT"
 
 REF_DIR=results_end/twas/reference

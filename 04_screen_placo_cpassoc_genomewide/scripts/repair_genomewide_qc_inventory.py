@@ -1,10 +1,14 @@
 from pathlib import Path
 from datetime import datetime
+import os
 
 import pandas as pd
 
 
-root = Path("/platform_data/p_user/p010/phase0/results")
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+root = Path(project_root) / "results"
 
 placo = pd.read_csv(root / "placo_genomewide/placo_genomewide_significant_snps.tsv", sep="\t")
 cpassoc = pd.read_csv(root / "cpassoc_genomewide/cpassoc_genomewide_significant_snps.tsv", sep="\t")

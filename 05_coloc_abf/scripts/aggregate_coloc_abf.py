@@ -4,10 +4,14 @@
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 
 
-PROJECT_ROOT = Path("/platform_data/p_user/p010/phase0")
+project_root = os.environ.get("PROJECT_ROOT", "")
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT")
+PROJECT_ROOT = Path(project_root).expanduser().resolve()
 STEP2 = PROJECT_ROOT / "results/phase0_extension/step2_input_tables"
 STEP3 = PROJECT_ROOT / "results/phase0_extension/step3_coloc_abf"
 PER = STEP3 / "per_locus"
@@ -75,6 +79,7 @@ def main() -> None:
     positives: list[dict[str, str]] = []
     for row in rows:
         pp4 = fnum(row.get("PP.H4.abf"))
+        pp3 = fnum(row.get("PP.H3.abf"))
         if pp4 is None or pp4 < PPH4_THRESHOLD:
             continue
         positives.append({
@@ -87,7 +92,11 @@ def main() -> None:
             "END": row.get("END", ""),
             "PP.H3": row.get("PP.H3.abf", ""),
             "PP.H4": row.get("PP.H4.abf", ""),
-            "analysis_group": "main" if pp4 >= MAIN_THRESHOLD else "secondary",
+            "analysis_group": (
+                "main"
+                if pp4 >= MAIN_THRESHOLD and (pp3 is None or pp4 > pp3)
+                else "secondary"
+            ),
         })
     write_tsv(STEP3 / "coloc_positive_loci.tsv", positives, positive_fields)
 
@@ -129,9 +138,10 @@ def main() -> None:
         "n_coloc_abf_loci": str(len(rows)),
         "n_coloc_abf_pass": str(sum(1 for r in rows if r.get("status") == "ok")),
         "n_coloc_h4_positive_loci": str(len(positives)),
+        "main_positive_rule": "PP.H4 >= 0.80 and PP.H4 > PP.H3",
         "pph4_threshold": str(PPH4_THRESHOLD),
     }]
-    write_tsv(STEP3 / "coloc_abf_summary.tsv", summary, ["n_coloc_abf_loci", "n_coloc_abf_pass", "n_coloc_h4_positive_loci", "pph4_threshold"])
+    write_tsv(STEP3 / "coloc_abf_summary.tsv", summary, ["n_coloc_abf_loci", "n_coloc_abf_pass", "n_coloc_h4_positive_loci", "main_positive_rule", "pph4_threshold"])
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT=${PROJECT_ROOT:-/platform_data/p_user/p010/phase0}
+ROOT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 STEP8="$ROOT/results/phase0_extension/step8_magma_gene_pathway"
 REF="$ROOT/data/reference/lava/1000G_Phase3_plinkfiles/1000G_EUR_Phase3_plink"
 OUT="$STEP8/resources/plink_merged/1000G.EUR.QC"

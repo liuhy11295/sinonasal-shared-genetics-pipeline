@@ -17,14 +17,21 @@ from scipy.stats import hypergeom
 from statsmodels.stats.multitest import multipletests
 
 
-ROOT = Path(os.environ.get("PROJECT_ROOT", "/platform_data/p_user/p010/phase0"))
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+ROOT = Path(project_root)
 OUT = ROOT / "results_end/twas"
 REF = OUT / "reference"
 FUSION = REF / "fusion_twas/FUSION.assoc_test.R"
 LDREF = REF / "LDREF/1000G.EUR."
 WEIGHTS = REF / "weights"
-CONDA_ROOT = Path(os.environ.get("CONDA_ROOT", "/platform_data/p_user/p010/miniconda3"))
-ENV = Path(os.environ.get("PHASE0_CONDA_ENV", "/platform_data/p_user/p010/conda_envs/nasal_pairwise_env"))
+conda_root = os.environ.get("CONDA_ROOT", "").strip()
+conda_env = os.environ.get("PHASE0_CONDA_ENV", "").strip()
+if not conda_root or not conda_env:
+    raise SystemExit("Set CONDA_ROOT and PHASE0_CONDA_ENV before running the TWAS pipeline.")
+CONDA_ROOT = Path(conda_root)
+ENV = Path(conda_env)
 R_BIN = ENV / "bin/Rscript"
 PY_BIN = ENV / "bin/python"
 TIME = "/usr/bin/time"

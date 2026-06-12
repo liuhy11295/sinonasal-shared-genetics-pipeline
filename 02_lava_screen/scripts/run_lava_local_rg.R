@@ -5,7 +5,8 @@ suppressPackageStartupMessages({
 })
 
 args <- commandArgs(trailingOnly = TRUE)
-project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT", "/platform_data/p_user/p010/phase0")
+project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT")
+if (!nzchar(project_root)) stop("Set PROJECT_ROOT or pass the project root as the first argument.")
 task_id <- if (length(args) >= 2) as.integer(args[[2]]) else as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID", "1"))
 
 step2_input_dir <- file.path(project_root, "results/phase0_extension/step2_input_tables")

@@ -4,10 +4,14 @@
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 
 
-BASE = Path("/home/lhy/nasal/results_end")
+results_root = os.environ.get("RESULTS_ROOT", "").strip()
+if not results_root:
+    raise SystemExit("Set RESULTS_ROOT to the analysis results directory.")
+BASE = Path(results_root)
 OUT = BASE / "twas_fusion_gtexv8_magma_candidates"
 MAGMA_SIG = BASE / "magma/significant_genes.tsv"
 MAGMA_ALL = BASE / "magma/gene_results.tsv"

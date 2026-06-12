@@ -12,7 +12,10 @@ from joblib import Parallel, delayed
 from scipy.stats import mannwhitneyu
 from statsmodels.stats.multitest import multipletests
 
-ROOT = Path(os.environ.get("PROJECT_ROOT", "/platform_data/p_user/p010/phase0"))
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+ROOT = Path(project_root)
 TWAS = ROOT / "results_end/twas"
 OUT = TWAS / "pathway_overlap_tissue_all31"
 GMT = ROOT / "results/phase0_extension/step8_magma_gene_pathway/resources/gmt"

@@ -32,12 +32,14 @@ def safe_id(value: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--project-root", default=os.environ.get("PROJECT_ROOT", "/platform_data/p_user/p010/phase0"))
+    parser.add_argument("--project-root", default=os.environ.get("PROJECT_ROOT", ""))
     parser.add_argument("--mtag-py", default=os.environ.get("MTAG_PY", "mtag.py"))
     parser.add_argument("--run", action="store_true", help="Actually execute MTAG. Without this flag only writes the selected pair table and commands.")
     args = parser.parse_args()
 
-    root = Path(args.project_root)
+    if not args.project_root:
+        raise SystemExit("Set --project-root or PROJECT_ROOT")
+    root = Path(args.project_root).expanduser().resolve()
     step1 = root / "results/phase0_extension/step1_ldsc_screen"
     step2_lava = root / "results/phase0_extension/step2_lava_screen"
     step2_inputs = root / "results/phase0_extension/step2_input_tables"
@@ -55,9 +57,9 @@ def main() -> None:
         row = manifest[pair_id]
         reasons = []
         if pair_id in ldsc:
-            reasons.append("LDSC_bonferroni_positive")
+            reasons.append("LDSC_BH_FDR_positive")
         if pair_id in lava:
-            reasons.append("LAVA_bonferroni_positive")
+            reasons.append("LAVA_adjusted_P_positive")
         out_prefix = out / "full" / safe_id(pair_id) / "mtag"
         cmd = [
             args.mtag_py,
@@ -86,7 +88,7 @@ def main() -> None:
         "n_ldsc_positive_pairs": str(len(ldsc)),
         "n_lava_positive_pairs": str(len(lava)),
         "n_selected_pairs": str(len(selected_ids)),
-        "selection_rule": "LDSC_bonferroni_positive OR LAVA_bonferroni_positive",
+        "selection_rule": "LDSC_BH_FDR_positive OR LAVA_adjusted_P_positive",
         "run_mtag": str(args.run),
     }], ["n_ldsc_positive_pairs", "n_lava_positive_pairs", "n_selected_pairs", "selection_rule", "run_mtag"])
 

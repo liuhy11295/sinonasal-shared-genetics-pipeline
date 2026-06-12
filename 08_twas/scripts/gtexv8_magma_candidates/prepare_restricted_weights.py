@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 import csv
 import gzip
+import os
 import urllib.request
 from collections import defaultdict
 from pathlib import Path
 
 
-BASE = Path("/home/lhy/nasal")
+project_root = os.environ.get("NASAL_PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set NASAL_PROJECT_ROOT to the parent directory containing results_end and resources.")
+BASE = Path(project_root)
 ROOT = BASE / "results_end/twas_fusion_gtexv8_magma_candidates"
 RES = BASE / "resources/fusion_gtexv8"
 WEIGHTS = RES / "weights/GTEx_v8"

@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-BASE=/platform_data/p_user/p010
-PROJECT=$BASE/phase0
+PROJECT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 PKG=$PROJECT/results/phase0_server/nasal4_vs_other_package
 LDSC_PKG=$PROJECT/results/phase0_server/ldsc_package
 OUT=$PROJECT/results/phase0_extension/step0_1

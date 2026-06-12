@@ -2,7 +2,9 @@
 import csv, gzip, glob, os, re, sys
 from collections import defaultdict, OrderedDict
 
-BASE = "/platform_data/p_user/p010/phase0"
+BASE = os.environ.get("PROJECT_ROOT", "").strip()
+if not BASE:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
 STEP1 = f"{BASE}/results/phase0_extension/step0_1"
 STEP1_LDSC = f"{BASE}/results/phase0_extension/step1_ldsc_screen"
 STEP2_LAVA = f"{BASE}/results/phase0_extension/step2_lava_screen"
@@ -86,7 +88,7 @@ for r in manifest:
         for k in trait_keys(trait): munged_map[k] = path
 
 # Backfill files that were generated before Step 1 but not symlinked there.
-# These remain source paths under /platform_data/p_user/p010/; no large files are copied.
+# These remain source paths under PROJECT_ROOT; no large files are copied.
 for path in glob.glob(f"{BASE}/results/phase0_server/nasal4_package/common/*.common.tsv.gz"):
     trait = os.path.basename(path).replace('.common.tsv.gz','')
     for k in trait_keys(trait):
@@ -411,7 +413,7 @@ for r in candidate_map:
 ldsc_sig = set()
 ldsc_stats = {}
 if ldsc_bonf_rows:
-    # Preferred current rule: LDSC-positive means Bonferroni p <= 0.05 / n_tested_pairs.
+    # The prefiltered table is produced by the LDSC BH-FDR screening step.
     for r in ldsc_bonf_rows:
         pid = r.get('pair_id','')
         if not pid: continue
@@ -432,7 +434,7 @@ else:
 
 lava_pos_counts = defaultdict(int)
 if lava_bonf_rows:
-    # Preferred current rule: LAVA-positive means Bonferroni p <= 0.05 / n_lava_tests.
+    # The prefiltered table contains LAVA rows with p_adj <= 0.05.
     for r in lava_bonf_rows:
         pid = r.get('pair_id') or r.get('trait_pair','')
         if pid:

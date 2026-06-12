@@ -6,7 +6,10 @@ import pandas as pd
 from scipy.stats import norm, combine_pvalues, hypergeom
 from statsmodels.stats.multitest import multipletests
 
-ROOT=Path(os.environ.get('PROJECT_ROOT','/platform_data/p_user/p010/phase0'))
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+ROOT = Path(project_root)
 STEP8=ROOT/'results/phase0_extension/step8_magma_gene_pathway'
 RES=STEP8/'resources'
 MAGMA=RES/'magma_official/magma'
@@ -107,7 +110,7 @@ def run_magma(pair_id, vars):
     annot_prefix=OUTDIR/f'{pair_id}.annot'
     pfile=OUTDIR/f'{pair_id}.snps_p.tsv'
     snploc=OUTDIR/f'{pair_id}.snps_loc.tsv'
-    bfile='/platform_data/p_user/p010/phase0/results/phase0_extension/step8_magma_gene_pathway/resources/plink_merged/1000G.EUR.QC'
+    bfile = str(RES / "plink_merged/1000G.EUR.QC")
     vars[['SNP','P']].drop_duplicates('SNP').to_csv(pfile, sep='\t', index=False)
     vars[['SNP','CHR','BP']].drop_duplicates('SNP').to_csv(snploc, sep='\t', index=False, header=False)
     if not Path(str(MAGMA)).exists() or not os.access(MAGMA, os.X_OK):
@@ -164,7 +167,7 @@ def enrich(pair_id, gene_df):
     if not sig: sig=set(gene_df.head(min(50,len(gene_df))).gene)
     rows=[]
     for db,name in [('GO','GO_Biological_Process_2023.gmt'),('KEGG','KEGG_2021_Human.gmt'),('Reactome','Reactome_2022.gmt')]:
-        path=Path('/platform_data/p_user/p010/phase0/results/phase0_extension/step8_magma_gene_pathway/resources/gmt')/name
+        path = RES / "gmt" / name
         if not path.exists(): continue
         for pathway,genes in parse_gmt(path):
             genes=genes&bg; M=len(bg); N=len(sig); K=len(genes); x=len(genes&sig)

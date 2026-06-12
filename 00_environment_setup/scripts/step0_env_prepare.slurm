@@ -1,8 +1,7 @@
 #!/bin/bash
 #SBATCH -J nasal_step0_env
-#SBATCH -o /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0_env.out
-#SBATCH -e /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0_env.err
-#SBATCH -D /platform_data/p_user/p010/phase0
+#SBATCH -o %j.step0_env.out
+#SBATCH -e %j.step0_env.err
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -10,11 +9,11 @@
 #SBATCH -t 0-08:00:00
 
 set -euo pipefail
-BASE=/platform_data/p_user/p010
-WORK=$BASE/phase0/results/phase0_extension/step0_1
-ENV_ROOT=$BASE/conda_envs
+PROJECT_ROOT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
+WORK=$PROJECT_ROOT/results/phase0_extension/step0_1
+ENV_ROOT="${ENV_ROOT:?Set ENV_ROOT}"
 MAIN_ENV=$ENV_ROOT/nasal_pairwise_env
-CONDA_ROOT=$BASE/miniconda3
+CONDA_ROOT="${CONDA_ROOT:?Set CONDA_ROOT}"
 CONDA=$CONDA_ROOT/bin/conda
 CHECK_DIR=$WORK/checks
 LOG_DIR=$WORK/logs
@@ -24,7 +23,7 @@ exec > >(tee -a "$LOG_DIR/step0_env_prepare.runtime.log") 2>&1
 
 echo "STEP0_START=$(date -Is)"
 echo "HOST=$(hostname)"
-echo "BASE=$BASE"
+echo "PROJECT_ROOT=$PROJECT_ROOT"
 echo "MAIN_ENV=$MAIN_ENV"
 
 if [ ! -x "$CONDA" ]; then
@@ -122,7 +121,7 @@ EOF
 # Discover existing user-provided scripts/packages for hard-to-install methods without modifying them.
 {
   echo "## Existing PLACO/LCV/CPASSOC/MR scripts under p010"
-  find "$BASE" -path "$BASE/.cache" -prune -o -type f \( -iname '*placo*' -o -iname '*lcv*' -o -iname '*cpassoc*' -o -iname '*TwoSampleMR*' -o -iname '*MRPRESSO*' -o -iname '*MR-PRESSO*' \) -print 2>/dev/null | sort | head -n 300
+  find "$PROJECT_ROOT" "$ENV_ROOT" -type f \( -iname '*placo*' -o -iname '*lcv*' -o -iname '*cpassoc*' -o -iname '*TwoSampleMR*' -o -iname '*MRPRESSO*' -o -iname '*MR-PRESSO*' \) -print 2>/dev/null | sort | head -n 300
 } > "$CHECK_DIR/existing_special_tools_scan.txt"
 
 echo "STEP0_DONE=$(date -Is)"

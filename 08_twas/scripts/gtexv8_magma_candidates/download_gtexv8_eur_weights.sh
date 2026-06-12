@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="/home/lhy/nasal/results_end/twas_fusion_gtexv8_magma_candidates"
-WEIGHTS="/home/lhy/nasal/resources/fusion_gtexv8/weights/GTEx_v8"
+NASAL_PROJECT_ROOT="${NASAL_PROJECT_ROOT:?Set NASAL_PROJECT_ROOT}"
+ROOT="${RESULTS_ROOT:-${NASAL_PROJECT_ROOT}/results_end}/twas_fusion_gtexv8_magma_candidates"
+WEIGHTS="${FUSION_WEIGHTS_DIR:-${NASAL_PROJECT_ROOT}/resources/fusion_gtexv8/weights/GTEx_v8}"
 MANIFEST="${ROOT}/download_manifest.tsv"
 LOG_DIR="${ROOT}/logs/downloads"
 MAX_JOBS="${MAX_JOBS:-1}"

@@ -6,7 +6,8 @@ suppressPackageStartupMessages({
 })
 
 args <- commandArgs(trailingOnly = TRUE)
-project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT", "/platform_data/p_user/p010/phase0")
+project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT")
+if (!nzchar(project_root)) stop("Set PROJECT_ROOT or pass the project root as the first argument.")
 
 step2_dir <- file.path(project_root, "results/phase0_extension/step2_input_tables")
 out_dir <- file.path(project_root, "results/phase0_extension/step4_lcv_mr")

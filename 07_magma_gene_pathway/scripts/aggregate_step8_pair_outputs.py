@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import os
 import pandas as pd
 import zipfile
 
-root = Path('/platform_data/p_user/p010/phase0')
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+root = Path(project_root)
 step8 = root / 'results/phase0_extension/step8_magma_gene_pathway'
 pair_file = step8 / 'pair_ids_step8.tsv'
 per_pair = step8 / 'per_pair'
@@ -115,7 +119,7 @@ fuma.to_csv(step8 / 'fuma_input_snps.tsv', sep='\t', index=False)
 fuma.to_csv(fuma_dir / 'fuma_input_snps.tsv', sep='\t', index=False)
 
 readme = fuma_dir / 'README_FUMA_UPLOAD.txt'
-readme.write_text('FUMA input SNP file generated from Step 8 per-pair shared SNP sources. Upload fuma_input_snps.tsv to FUMA SNP2GENE; fields: SNP, CHR, BP, P, source. All source files remain under /platform_data/p_user/p010/.\n')
+readme.write_text('FUMA input SNP file generated from Step 8 per-pair shared SNP sources. Upload fuma_input_snps.tsv to FUMA SNP2GENE; fields: SNP, CHR, BP, P, source. Source files remain under PROJECT_ROOT.\n')
 zip_path = fuma_dir / 'fuma_upload_package.zip'
 with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as z:
     z.write(fuma_dir / 'fuma_input_snps.tsv', arcname='fuma_input_snps.tsv')

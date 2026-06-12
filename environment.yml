@@ -1,0 +1,11 @@
+name: sinonasal-shared-genetics
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10
+  - r-base>=4.3
+  - pip
+  - plink
+  - pip:
+      - -r requirements.txt

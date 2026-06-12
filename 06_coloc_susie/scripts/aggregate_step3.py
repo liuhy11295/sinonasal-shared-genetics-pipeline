@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 import csv
+import os
 from collections import OrderedDict
 from pathlib import Path
 
-PROJECT_ROOT = Path("/platform_data/p_user/p010/phase0")
+project_root = os.environ.get("PROJECT_ROOT", "")
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT")
+PROJECT_ROOT = Path(project_root).expanduser().resolve()
 STEP2 = PROJECT_ROOT / "results/phase0_extension/step2_input_tables"
 STEP3 = PROJECT_ROOT / "results/phase0_extension/step3_susie_coloc"
 PER = STEP3 / "per_locus"
@@ -116,11 +120,12 @@ for key, r in susie_lookup.items():
 high_conf = []
 for r in coloc_rows:
     pp4 = fnum(r.get("PP.H4"))
+    pp3 = fnum(r.get("PP.H3"))
     pip1 = fnum(r.get("PIP_trait1"))
     pip2 = fnum(r.get("PIP_trait2"))
     if pp4 is None or pip1 is None or pip2 is None:
         continue
-    if pp4 >= 0.8 and pip1 >= 0.1 and pip2 >= 0.1:
+    if pp4 >= 0.8 and (pp3 is None or pp4 > pp3) and pip1 >= 0.1 and pip2 >= 0.1:
         key = (r.get("pair_id"), r.get("locus_id"), r.get("SNP"))
         base = candidate_by_key.get(key, {})
         susie_base = susie_lookup.get(key, {})

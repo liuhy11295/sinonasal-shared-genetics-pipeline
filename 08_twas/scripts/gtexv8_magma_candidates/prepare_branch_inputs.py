@@ -3,6 +3,7 @@ import csv
 import gzip
 import math
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -10,7 +11,10 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 
-BASE = Path("/home/lhy/nasal")
+project_root = os.environ.get("NASAL_PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set NASAL_PROJECT_ROOT to the parent directory containing results_end and resources.")
+BASE = Path(project_root)
 RESULTS = BASE / "results_end"
 OUT = RESULTS / "twas_fusion_gtexv8_magma_candidates"
 RES = BASE / "resources/fusion_gtexv8"

@@ -1,8 +1,7 @@
 #!/bin/bash
 #SBATCH -J nasal_step0b_tools
-#SBATCH -o /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0b_tools.out
-#SBATCH -e /platform_data/p_user/p010/phase0/results/phase0_extension/step0_1/logs/%j.step0b_tools.err
-#SBATCH -D /platform_data/p_user/p010/phase0
+#SBATCH -o %j.step0b_tools.out
+#SBATCH -e %j.step0b_tools.err
 #SBATCH -p compute_nodes
 #SBATCH -N 1
 #SBATCH -n 4
@@ -10,11 +9,10 @@
 #SBATCH -t 0-12:00:00
 
 set -euo pipefail
-BASE=/platform_data/p_user/p010
-PROJECT=$BASE/phase0
+PROJECT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 WORK=$PROJECT/results/phase0_extension/step0_1
-ENV_ROOT=$BASE/conda_envs
-CONDA_ROOT=$BASE/miniconda3
+ENV_ROOT="${ENV_ROOT:?Set ENV_ROOT}"
+CONDA_ROOT="${CONDA_ROOT:?Set CONDA_ROOT}"
 TOOLS=$WORK/tools
 CHECK=$WORK/checks
 LOG=$WORK/logs

@@ -1,6 +1,7 @@
 # 01 LDSC Screen
 
-This step runs genetic-correlation screening with LDSC and applies Bonferroni correction.
+This step runs genetic-correlation screening with LDSC and applies
+Benjamini-Hochberg false-discovery-rate correction across tested disease pairs.
 
 ## Script
 
@@ -22,8 +23,8 @@ This step runs genetic-correlation screening with LDSC and applies Bonferroni co
 
 ## Threshold
 
-LDSC-positive pairs are selected by Bonferroni correction:
+LDSC-positive pairs are selected at:
 
-`p <= 0.05 / n_tested_pairs`
+`BH-FDR q < 0.05` and `rg > 0`
 
 LDSC runs in parallel with LAVA. MTAG receives pairs positive in either LDSC or LAVA.

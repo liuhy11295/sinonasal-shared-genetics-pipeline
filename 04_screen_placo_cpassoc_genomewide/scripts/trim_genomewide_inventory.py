@@ -1,9 +1,13 @@
 from pathlib import Path
+import os
 
 import pandas as pd
 
 
-root = Path("/platform_data/p_user/p010/phase0/results")
+project_root = os.environ.get("PROJECT_ROOT", "").strip()
+if not project_root:
+    raise SystemExit("Set PROJECT_ROOT to the analysis project root.")
+root = Path(project_root) / "results"
 
 core_files = [
     ("placo_genomewide/placo_genomewide_significant_snps.tsv", "positive PLACO SNPs retained by P<5e-8"),

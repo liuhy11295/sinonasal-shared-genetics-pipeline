@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="/home/lhy/nasal/results_end/twas_fusion_gtexv8_magma_candidates"
-WEIGHTS="/home/lhy/nasal/resources/fusion_gtexv8/weights/GTEx_v8"
-LDREF_PREFIX="/home/lhy/nasal/resources/fusion_gtexv8/LDREF_hg38_EUR/plink_files/plink_files/1000G.EUR.hg38."
+NASAL_PROJECT_ROOT="${NASAL_PROJECT_ROOT:?Set NASAL_PROJECT_ROOT}"
+ROOT="${RESULTS_ROOT:-${NASAL_PROJECT_ROOT}/results_end}/twas_fusion_gtexv8_magma_candidates"
+WEIGHTS="${FUSION_WEIGHTS_DIR:-${NASAL_PROJECT_ROOT}/resources/fusion_gtexv8/weights/GTEx_v8}"
+LDREF_PREFIX="${FUSION_LDREF_PREFIX:?Set FUSION_LDREF_PREFIX}"
 MAX_JOBS="${MAX_JOBS:-1}"
 SWAP_USED_STOP_KB="${SWAP_USED_STOP_KB:-1782579}"
 SWAP_CLEAR_MIN_USED_KB="${SWAP_CLEAR_MIN_USED_KB:-1}"

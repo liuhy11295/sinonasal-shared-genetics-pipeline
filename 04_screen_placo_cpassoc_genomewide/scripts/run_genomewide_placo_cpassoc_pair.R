@@ -7,7 +7,8 @@ suppressPackageStartupMessages({
 })
 
 args <- commandArgs(trailingOnly = TRUE)
-project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT", "/platform_data/p_user/p010/phase0")
+project_root <- if (length(args) >= 1) args[[1]] else Sys.getenv("PROJECT_ROOT")
+if (!nzchar(project_root)) stop("Set PROJECT_ROOT or pass the project root as the first argument.")
 pair_id_arg <- if (length(args) >= 2) args[[2]] else Sys.getenv("PAIR_ID", "")
 task_id <- suppressWarnings(as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID", "0")))
 threads <- suppressWarnings(as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", Sys.getenv("SLURM_NTASKS", "1"))))

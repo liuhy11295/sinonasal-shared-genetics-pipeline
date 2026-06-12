@@ -6,7 +6,7 @@ This step selects trait pairs for MTAG after the parallel LDSC and LAVA screens.
 
 A pair enters MTAG if:
 
-`LDSC Bonferroni-positive OR LAVA Bonferroni-positive`
+`LDSC BH-FDR-positive OR LAVA adjusted-P-positive`
 
 ## Scripts
 

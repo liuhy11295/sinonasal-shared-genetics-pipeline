@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT=${PROJECT_ROOT:-/platform_data/p_user/p010/phase0}
+ROOT="${PROJECT_ROOT:?Set PROJECT_ROOT}"
 STEP8="$ROOT/results/phase0_extension/step8_magma_gene_pathway"
 RES="$STEP8/resources"
 mkdir -p "$RES" "$STEP8/logs"
