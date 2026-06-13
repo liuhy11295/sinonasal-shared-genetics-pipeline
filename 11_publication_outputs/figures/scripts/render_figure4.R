@@ -279,11 +279,9 @@ matrix_bg <- expand.grid(
   display_drug_name = factor(rev(levels(panel_b_source$display_drug_name)),
                              levels = levels(panel_b_source$display_drug_name))
 )
-pair_support_breaks <- sort(unique(as.integer(c(
-  min(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE),
-  round(stats::median(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE)),
-  max(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE)
-))))
+pair_support_max <- max(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE)
+pair_support_breaks <- c(1, 6, 12)
+pair_support_breaks <- pair_support_breaks[pair_support_breaks <= pair_support_max]
 
 p4b <- ggplot(matrix_bg, aes(gene_symbol, display_drug_name)) +
   geom_tile(fill = "#F3F6F7", colour = "white", linewidth = 0.25) +
