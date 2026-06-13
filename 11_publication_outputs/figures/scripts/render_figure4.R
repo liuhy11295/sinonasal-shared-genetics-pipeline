@@ -279,6 +279,11 @@ matrix_bg <- expand.grid(
   display_drug_name = factor(rev(levels(panel_b_source$display_drug_name)),
                              levels = levels(panel_b_source$display_drug_name))
 )
+pair_support_breaks <- sort(unique(as.integer(c(
+  min(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE),
+  round(stats::median(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE)),
+  max(panel_b_source$n_pairs_for_gene_drug, na.rm = TRUE)
+))))
 
 p4b <- ggplot(matrix_bg, aes(gene_symbol, display_drug_name)) +
   geom_tile(fill = "#F3F6F7", colour = "white", linewidth = 0.25) +
@@ -290,26 +295,45 @@ p4b <- ggplot(matrix_bg, aes(gene_symbol, display_drug_name)) +
     stroke = 0.22,
     alpha = 0.98
   ) +
-  scale_fill_manual(values = figure4_gene_colours) +
+  scale_fill_manual(
+    values = figure4_gene_colours,
+    name = "Gene class",
+    guide = guide_legend(
+      order = 1,
+      override.aes = list(size = 4.8, shape = 21, colour = "white",
+                          alpha = 1, stroke = 0.3)
+    )
+  ) +
   scale_size_continuous(range = c(1.5, 4.8),
-                        breaks = sort(unique(pmin(panel_b_source$n_pairs_for_gene_drug,
-                                                  12)))) +
+                        breaks = pair_support_breaks,
+                        name = "Pairs") +
   guides(
     size = guide_legend(
+      order = 2,
       override.aes = list(shape = 21, fill = COL["graphite"],
                           colour = COL["graphite"], alpha = 1, stroke = 0.2)
     )
   ) +
   labs(title = "Approved drug-target recurrence matrix",
        subtitle = "Point size shows disease-pair support for each drug-target edge",
-       x = NULL, y = NULL, fill = NULL, size = "Pairs") +
+       x = NULL, y = NULL) +
   theme_pub(5.4) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
     axis.line = element_blank(),
     axis.ticks = element_blank(),
     panel.grid = element_blank(),
-    legend.position = "bottom"
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.box = "vertical",
+    legend.justification = "center",
+    legend.title = element_text(size = 6.3, colour = COL["graphite"]),
+    legend.text = element_text(size = 6.0, colour = COL["graphite"]),
+    legend.key.size = unit(4.5, "mm"),
+    legend.spacing.x = unit(2.0, "mm"),
+    legend.spacing.y = unit(0.4, "mm"),
+    legend.box.spacing = unit(0.8, "mm"),
+    legend.margin = margin(0, 0, 0, 0)
   )
 # Candidate Figure 4 preview 1: all target-gene burden view
 candidate_gene_evidence <- gene_evidence[
@@ -938,16 +962,18 @@ p4a_arc <- p4_candidate_arc_network +
       "Approved drugs connect to prioritized Gene-A/Gene-B target genes;",
       "line width reflects disease-pair support"
     )
+  ) +
+  theme(
+    legend.position = "none"
   )
 
 p4c_wrapped <- wrap_elements(full = directional_preview)
 
 figure4_top <- (p4a_arc | p4b) +
-  plot_layout(widths = c(1.28, 1.00), guides = "collect") &
-  theme(legend.position = "bottom")
+  plot_layout(widths = c(1.28, 1.00))
 
 figure4_assembled <- figure4_top / p4c_wrapped +
-  plot_layout(heights = c(1.00, 0.58), guides = "collect") +
+  plot_layout(heights = c(1.00, 0.58)) +
   plot_annotation(tag_levels = "A") &
   theme(
     plot.tag = element_text(face = "bold", size = 10,
